@@ -97,12 +97,6 @@
 
         for (var i = 0; i < inputValues.length; i++) {
             inputValues[i].onclick = inputvalue;
-            inputValues[i].onkeyup = function (event) {
-                if (event.keyCode == (48 + i)) {
-                    this.onclick;
-                }
-            }
-
         }
 
         function clearInput() {
