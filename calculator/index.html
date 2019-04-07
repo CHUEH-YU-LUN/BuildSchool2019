@@ -97,7 +97,7 @@
 
         for (var i = 0; i < inputValues.length; i++) {
             inputValues[i].onclick = inputvalue;
-            inputValues[i].onkeyup = function(event) {
+            inputValues[i].onkeyup = function (event) {
                 if (event.keyCode == (48 + i)) {
                     this.onclick;
                 }
@@ -124,7 +124,7 @@
         document.getElementById("cal").onclick = doCal;
 
         document.onkeyup = function (event) {
-            if (event.key >= 0 && event.key <= 9) { //鍵盤輸入0~9
+            if (event.key >= 0 && event.key <= 9) {
                 input.value += event.key;
             }
             if (event.key == "+") {
