@@ -65,8 +65,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4"><button type="button"
-                                    class="btn btn-dark btn-lg btn-block" id="cal">=</button>
+                            <td colspan="4"><button type="button" class="btn btn-dark btn-lg btn-block"
+                                    id="cal">=</button>
                             </td>
                         </tr>
                     </tbody>
@@ -88,15 +88,21 @@
 
     <script>
         var inputValues = document.getElementsByClassName("btn-value");
+        var input = document.getElementById("result");
 
         function inputvalue() {
-            var input = document.getElementById("result");
             var text = this.innerHTML;
             input.value += text;
         }
 
         for (var i = 0; i < inputValues.length; i++) {
             inputValues[i].onclick = inputvalue;
+            inputValues[i].onkeyup = function(event) {
+                if (event.keyCode == (48 + i)) {
+                    this.onclick;
+                }
+            }
+
         }
 
         function clearInput() {
@@ -117,6 +123,30 @@
 
         document.getElementById("cal").onclick = doCal;
 
+        document.onkeyup = function (event) {
+            if (event.key >= 0 && event.key <= 9) { //鍵盤輸入0~9
+                input.value += event.key;
+            }
+            if (event.key == "+") {
+                input.value += event.key;
+            }
+            if (event.key == "-") {
+                input.value += event.key;
+            }
+            if (event.key == "*") {
+                input.value += event.key;
+            }
+            if (event.key == "/") {
+                input.value += event.key;
+            }
+            if (event.keyCode == 13) {
+                document.getElementById("cal").click();
+            }
+            if (event.keyCode == 8) {
+                document.getElementById("clear").click();
+            }
+
+        }
     </script>
 </body>
 
