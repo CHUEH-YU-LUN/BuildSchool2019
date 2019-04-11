@@ -1,20 +1,132 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>抽獎機</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-      
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .view-num {
+            width: 250px;
+            height: 300px;
+            overflow: hidden;
+            margin: auto;
+            position: relative;
+        }
+
+        .now-number {
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            display: inline-block;
+            color: white;
+            background-color: gray;
+            line-height: 300px;
+            font-size: 50px;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div><span class="text-light">最小號碼 : <input type="number" id="min-num" value="1"> &nbsp 最大號碼 : <input
+                    type="number" id="max-num" value="10"></span></div>
+        <hr>
+        <h2><span class="text-light" id="result">已經抽過 : </span></h2>
+        <hr>
+        <div class="view-num">
+            <div class="now-number"></div>
+            <div class="now-number"></div>
+            <div class="now-number"></div>
+        </div>
+        <hr>
+        <button type="button" class="btn btn-danger" id="start">抽!</button>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        var numArray = [];
+
+        $("#start").on("click", getRandomNum);
+
+        function getRandomNum() {
+            var min = parseInt($("#min-num").val());
+            var max = parseInt($("#max-num").val());
+
+            if (min > max) {
+                return;
+            }
+            // console.log(min, max);
+            for (var i = 0; i < max - min + 1; i++) {
+                var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                while (numArray.indexOf(randomNum) != -1) {
+                    randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+                numArray[i] = randomNum;
+            }
+            console.log(numArray);
+            $("#start").unbind();
+            $("#start").on("click", doContinue);
+            doContinue();
+        }
+
+        var timeTemp = 0;
+        function doContinue() {
+            timeTemp = 0;
+            if (numArray.length == 0) {
+                $("#start").unbind();
+                alert("以抽完全部號碼");
+                $("#start").on("click", getRandomNum);
+            }
+            else {
+                draw();
+            }
+        }
+        var random = 0;
+        function draw() {
+            if (timeTemp < 10) {
+                $($(".now-number")[0]).css("left", "-250px");
+                $($(".now-number")[1]).css("left", "0px");
+                $($(".now-number")[2]).css("left", "250px");
+                setTimeout(draw, 500);
+                timeTemp++;
+                $($(".now-number")[1]).animate({ left: "-250px" }, 300, "linear");
+                random = Math.floor(Math.random() * numArray.length);
+                $($(".now-number")[1]).html(numArray[random]);
+                $($(".now-number")[2]).html(numArray[random]);
+                console.log(numArray[random]);
+                $($(".now-number")[2]).animate({ left: "0px" }, 300, "linear");
+            }
+            else {
+                if(numArray.length==1) {
+                    $("#result").text($("#result").text() + numArray[random]);
+                }
+                else {
+                    $("#result").text($("#result").text() + numArray[random] + ",");
+                }
+                numArray.splice(jQuery.inArray(numArray[random], numArray), 1);
+                // console.log(numArray);
+            }
+        }
+    </script>
+</body>
+
 </html>
