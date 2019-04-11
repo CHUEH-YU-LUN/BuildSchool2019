@@ -104,13 +104,13 @@
         function draw() {
             if (timeTemp < 10) {
                 $($(".now-number")[0]).css("left", "-250px");
+                $($(".now-number")[1]).html(numArray[random]);
                 $($(".now-number")[1]).css("left", "0px");
                 $($(".now-number")[2]).css("left", "250px");
                 setTimeout(draw, 500);
                 timeTemp++;
                 $($(".now-number")[1]).animate({ left: "-250px" }, 300, "linear");
                 random = Math.floor(Math.random() * numArray.length);
-                $($(".now-number")[1]).html(numArray[random]);
                 $($(".now-number")[2]).html(numArray[random]);
                 // console.log(numArray[random]);
                 $($(".now-number")[2]).animate({ left: "0px" }, 300, "linear");
