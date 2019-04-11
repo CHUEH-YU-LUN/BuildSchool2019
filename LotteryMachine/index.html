@@ -82,7 +82,7 @@
                 }
                 numArray[i] = randomNum;
             }
-            console.log(numArray);
+            // console.log(numArray);
             $("#start").unbind();
             $("#start").on("click", doContinue);
             doContinue();
@@ -112,7 +112,7 @@
                 random = Math.floor(Math.random() * numArray.length);
                 $($(".now-number")[1]).html(numArray[random]);
                 $($(".now-number")[2]).html(numArray[random]);
-                console.log(numArray[random]);
+                // console.log(numArray[random]);
                 $($(".now-number")[2]).animate({ left: "0px" }, 300, "linear");
             }
             else {
