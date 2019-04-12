@@ -64,7 +64,7 @@
         crossorigin="anonymous"></script>
     <script>
         var numArray = [];
-
+        var numArrayLength = 0;
         $("#start").on("click", getRandomNum);
 
         function getRandomNum() {
@@ -85,6 +85,7 @@
                 numArray[i] = randomNum;
             }
             // console.log(numArray);
+            numArrayLength = numArray.length;
             $("#start").unbind();
             $("#start").on("click", doContinue);
             doContinue();
@@ -99,6 +100,7 @@
                 $("#start").on("click", getRandomNum);
             }
             else {
+                $("#start").unbind();
                 draw();
             }
         }
@@ -111,21 +113,22 @@
                 $($(".now-number")[2]).css("left", "250px");
                 setTimeout(draw, 500);
                 timeTemp++;
-                $($(".now-number")[1]).animate({ left: "-250px" }, 300, "linear");
                 random = Math.floor(Math.random() * numArray.length);
                 $($(".now-number")[2]).html(numArray[random]);
                 // console.log(numArray[random]);
                 $($(".now-number")[2]).animate({ left: "0px" }, 300, "linear");
+                $($(".now-number")[1]).animate({ left: "-250px" }, 300, "linear");
             }
             else {
-                if(numArray.length==1) {
+                if (numArray.length == numArrayLength) {
                     $("#result").text($("#result").text() + numArray[random]);
                 }
                 else {
-                    $("#result").text($("#result").text() + numArray[random] + ",");
+                    $("#result").text($("#result").text() + " , " + numArray[random]);
                 }
                 numArray.splice(jQuery.inArray(numArray[random], numArray), 1);
                 // console.log(numArray);
+                $("#start").on("click", doContinue);
             }
         }
     </script>
