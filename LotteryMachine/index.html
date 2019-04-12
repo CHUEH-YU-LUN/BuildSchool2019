@@ -68,6 +68,8 @@
         $("#start").on("click", getRandomNum);
 
         function getRandomNum() {
+            $("#result").text("已經抽過 : ");
+
             var min = parseInt($("#min-num").val());
             var max = parseInt($("#max-num").val());
 
