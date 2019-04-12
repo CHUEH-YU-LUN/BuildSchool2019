@@ -69,10 +69,16 @@
         function getRandomNum() {
             $("#result").text("已經抽過 : ");
 
+            if($("#min-num").val()==""||$("#max-num").val()=="") {
+                alert("請輸入數值");
+                return;
+            }
+
             var min = parseInt($("#min-num").val());
             var max = parseInt($("#max-num").val());
 
             if (min > max) {
+                alert("最小值不能大於最大值");
                 return;
             }
             // console.log(min, max);
