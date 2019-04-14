@@ -1,20 +1,200 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>撲克記憶遊戲</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-      
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .card {
+            height: 125px;
+            background-color: gray;
+            line-height: 125px;
+            color: white;
+            font-size: 50px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h2 class="text-center text-danger">記憶遊戲</h2>
+        <div class="row justify-content-center">
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+            <div class="col-1 card"></div>
+        </div>
+        <button type="button" class="btn btn-primary my-3" id="start">start</button>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        var cards = [];
+        var tempArray = [];
+        var gameCards = [];
+
+        function init() {
+            cards = [];
+            tempArray = [];
+            gameCards = [];
+            $(".card").css("visibility", "visible");
+            $(".card").css("color", "gray");
+            var random = 0;
+            for (var i = 0; i < 8; i++) {
+                random = Math.floor(Math.random() * 13);
+                while (cards.indexOf(random) != -1) {
+                    random = Math.floor(Math.random() * 13);
+                }
+                cards[i] = random;
+            }
+            for (var i = 0; i < 8; i++) {
+                cards.push(cards[i] + 13);
+            }
+            for (var i = 0; i < 16; i++) {
+                random = Math.floor(Math.random() * 16);;
+                while (tempArray.indexOf(random) != -1) {
+                    random = Math.floor(Math.random() * 16);
+                }
+                tempArray[i] = random;
+            }
+        };
+        $("#start").on("click", function () {
+            alert("start!!");
+            init();
+            $(".card").on("click", cardJudge);
+        });
+
+        var temp = 0;
+        var card1Num = 0;
+        var card2Num = 0;
+        var trueNum = 0;
+        var $this_1 = $(this);
+        var $this_2 = $(this);
+        function cardJudge() {
+            for (var i = 0; i < 16; i++) {
+                if (cards[tempArray[i]] > 12) {
+                    $($(".card")[i]).text(cards[tempArray[i]] - 13 + 1);
+                }
+                else {
+                    $($(".card")[i]).text(cards[tempArray[i]] + 1);
+                }
+            }
+            temp++;
+            if (temp == 2) {
+                temp = 0;
+                $this_2 = $(this);
+                card2Num = $this_2.text();
+                hideNum();
+                $this_1.text(card1Num);
+                $this_2.text(card2Num);
+                $this_2.css("color", "white");
+                $(".card").unbind();
+                if (card1Num == card2Num) {
+                    setTimeout(isTrue, 1000);
+                }
+                else {
+                    setTimeout(isFalse, 1000);
+                }
+            }
+            else {
+                $this_1 = $(this);
+                card1Num = $this_1.text();
+                hideNum();
+                $this_1.text(card1Num);
+                $this_1.css("color", "white");
+                $this_1.unbind();
+            }
+        };
+
+        function isTrue() {
+            $this_1.css("visibility", "hidden");
+            $this_2.css("visibility", "hidden");
+            hideNum();
+            trueNum++;
+            if (trueNum == 8) {
+                trueNum = 0;
+                alert("遊戲結束!!");
+                return;
+            }
+            $(".card").on("click", cardJudge);
+        };
+
+        function isFalse() {
+            $this_1.css("color", "gray");
+            $this_2.css("color", "gray");
+            hideNum();
+            $(".card").on("click", cardJudge);
+        };
+
+        function hideNum() {
+            for (var i = 0; i < 16; i++) {
+                $($(".card")[i]).text(" ");
+            }
+        };
+
+        // 按←Backspace五次可看所有牌 2 秒
+        var keyTemp = 0;
+        document.onkeyup = function (event) {
+            if (event.keyCode == 8) {
+                keyTemp++;
+                if (keyTemp == 5) {
+                    for (var i = 0; i < 16; i++) {
+                        if (cards[tempArray[i]] > 12) {
+                            $($(".card")[i]).text(cards[tempArray[i]] - 13 + 1);
+                        }
+                        else {
+                            $($(".card")[i]).text(cards[tempArray[i]] + 1);
+                        }
+                    }
+                    $(".card").css("color", "white");
+                    $(".card").unbind();
+                    setTimeout(hideCard, 2000);
+                }
+            }
+        };
+
+        function hideCard() {
+            keyTemp = 0;
+            hideNum();
+            $(".card").css("color", "gray");
+            $(".card").on("click", cardJudge);
+        };
+
+    </script>
+</body>
+
 </html>
